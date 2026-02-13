@@ -1,10 +1,1730 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Hello User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zeneka LuKun 鹿坤 - 音乐爱好者、主播、才艺博主">
+    <meta name="keywords" content="Zeneka, 鹿坤, 音乐, 主播, 才艺, 音乐爱好者">
+    <title>Zeneka LuKun 鹿坤 | 音乐爱好者 & 才艺博主</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --dark-bg: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --text-light: #ffffff;
+            --text-gray: #b2bec3;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-content {
+            text-align: center;
+        }
+
+        .preloader-logo {
+            width: 100px;
+            height: 100px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .lang-switch:hover {
+            background: rgba(108, 92, 231, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .lang-switch span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .lang-switch span.active {
+            color: var(--secondary-color);
+        }
+
+        .lang-switch span:hover {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .lang-switch .separator {
+            color: var(--text-gray);
+            font-size: 0.7rem;
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 100px 5% 50px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-color);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent-color);
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--secondary-color);
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(90deg); }
+            50% { transform: translateY(0) rotate(180deg); }
+            75% { transform: translateY(30px) rotate(270deg); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .hero-text {
+            animation: fadeInLeft 1s ease;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(108, 92, 231, 0.2);
+            border: 1px solid var(--primary-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-title .highlight {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease 1s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .hero-main-img {
+            width: 100%;
+            border-radius: 30px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-image-decoration {
+            position: absolute;
+            border-radius: 30px;
+            z-index: 1;
+        }
+
+        .hero-image-decoration-1 {
+            width: 100%;
+            height: 100%;
+            top: 20px;
+            left: -20px;
+            background: var(--gradient-1);
+            opacity: 0.3;
+        }
+
+        .hero-image-decoration-2 {
+            width: 60%;
+            height: 60%;
+            bottom: -30px;
+            right: -30px;
+            background: var(--gradient-2);
+            opacity: 0.2;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            animation: fadeInUp 0.8s ease 1.2s both;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-icon:hover {
+            background: var(--gradient-1);
+            transform: translateY(-5px);
+            border-color: transparent;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-subtitle {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(108, 92, 231, 0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(180deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-img-container {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .about-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-img-container:hover .about-img {
+            transform: scale(1.05);
+        }
+
+        .about-info {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-role {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Skills Section */
+        .skills {
+            background: var(--dark-bg);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .skill-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .skill-card:nth-child(2) .skill-icon {
+            background: var(--gradient-2);
+        }
+
+        .skill-card:nth-child(3) .skill-icon {
+            background: var(--gradient-3);
+        }
+
+        .skill-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .skill-description {
+            color: var(--text-gray);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            background: linear-gradient(180deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:hover video {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--dark-bg);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            padding: 2rem;
+        }
+
+        .qr-sections {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-details p {
+            color: var(--text-gray);
+        }
+
+        .contact-details a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary-color);
+        }
+
+        .qr-section {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .qr-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            padding: 1rem;
+            background: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-description {
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+
+        .qr-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: #06C755;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .qr-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(6, 199, 85, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card-bg);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--gradient-1);
+            transform: translateY(-3px);
+        }
+
+        .footer-copyright {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            max-width: 350px;
+            height: 100vh;
+            background: var(--card-bg);
+            padding: 100px 2rem 2rem;
+            transition: right 0.3s ease;
+            z-index: 999;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+        }
+
+        .mobile-menu-links li {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-menu-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .qr-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 1rem;
+            }
+
+            .lang-switch {
+                padding: 0.4rem 0.8rem;
+            }
+
+            .lang-switch span {
+                font-size: 0.75rem;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .qr-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .qr-code {
+                width: 200px;
+                height: 200px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-badge {
+                font-size: 0.75rem;
+                padding: 6px 15px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .about-name {
+                font-size: 2rem;
+            }
+
+            .skill-card {
+                padding: 2rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animation on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-<h1>My name is Harris</h1>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <img src="media/my_logo.png" alt="Logo" class="preloader-logo">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="media/my_logo.png" alt="Zeneka Logo" class="logo-img">
+            <span class="logo-text">Zeneka</span>
+        </a>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#home" class="active" data-zh="首页" data-en="Home" data-th="หน้าแรก" data-vi="Trang chủ">首页</a></li>
+                <li><a href="#about" data-zh="关于" data-en="About" data-th="เกี่ยวกับ" data-vi="Về tôi">关于</a></li>
+                <li><a href="#skills" data-zh="才艺" data-en="Skills" data-th="ทักษะ" data-vi="Kỹ năng">才艺</a></li>
+                <li><a href="#gallery" data-zh="作品" data-en="Gallery" data-th="ผลงาน" data-vi="Tác phẩm">作品</a></li>
+                <li><a href="#contact" data-zh="联系" data-en="Contact" data-th="ติดต่อ" data-vi="Liên hệ">联系</a></li>
+            </ul>
+            <div class="lang-switch" id="langSwitch">
+                <span id="langZh" class="active">中文</span>
+                <span class="separator">|</span>
+                <span id="langEn">EN</span>
+                <span class="separator">|</span>
+                <span id="langTh">ไทย</span>
+                <span class="separator">|</span>
+                <span id="langVi">VN</span>
+            </div>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <ul class="mobile-menu-links">
+            <li><a href="#home" data-zh="首页" data-en="Home" data-th="หน้าแรก" data-vi="Trang chủ">首页</a></li>
+            <li><a href="#about" data-zh="关于" data-en="About" data-th="เกี่ยวกับ" data-vi="Về tôi">关于</a></li>
+            <li><a href="#skills" data-zh="才艺" data-en="Skills" data-th="ทักษะ" data-vi="Kỹ năng">才艺</a></li>
+            <li><a href="#gallery" data-zh="作品" data-en="Gallery" data-th="ผลงาน" data-vi="Tác phẩm">作品</a></li>
+            <li><a href="#contact" data-zh="联系" data-en="Contact" data-th="ติดต่อ" data-vi="Liên hệ">联系</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge" data-zh="🎵 音乐爱好者 & 才艺博主" data-en="🎵 Music Lover & Talent Creator" data-th="🎵 คนรักเพลง & นักสร้างสรรค์" data-vi="🎵 Người yêu âm nhạc & Người sáng tạo">🎵 音乐爱好者 & 才艺博主</span>
+                <h1 class="hero-title">
+                    <span data-zh="你好，我是 " data-en="Hi, I'm " data-th="สวัสดี ฉันคือ " data-vi="Xin chào, tôi là ">你好，我是 </span>
+                    <span class="highlight">Zeneka LuKun</span>
+                </h1>
+                <h2 class="hero-subtitle" data-zh="鹿坤 | 音乐 · 交友 · 才艺" data-en="Lukun | Music · Social · Talent" data-th="หลูคุน | เพลง · เพื่อน · ทักษะ" data-vi="Lộc Khôn | Âm nhạc · Bạn bè · Tài năng">鹿坤 | 音乐 · 交友 · 才艺</h2>
+                <p class="hero-description" data-zh="热爱音乐，用声音传递情感。作为一名才艺博主，我致力于分享音乐的快乐，结识志同道合的朋友，用才艺点亮生活的每一个瞬间。" data-en="Passionate about music, conveying emotions through voice. As a talent creator, I'm dedicated to sharing the joy of music, connecting with like-minded friends, and brightening every moment of life with talent." data-th="หลงใหลในเพลง ส่งผ่านอารมณ์ด้วยเสียง ในฐานะนักสร้างสรรค์ผลงาน ฉันมุ่งมั่นที่จะแบ่งปันความสุขจากเพลง พบปะเพื่อนที่มีความคิดเหมือนกัน และส่องแสงให้ชีวิตสดใสด้วยความสามารถ" data-vi="Đam mê âm nhạc, truyền tải cảm xúc qua giọng nói. Là một người sáng tạo tài năng, tôi tận tâm chia sẻ niềm vui từ âm nhạc, kết nối với những người bạn cùng chí hướng, và thắp sáng mọi khoảnh khắc của cuộc sống bằng tài năng.">
+                    热爱音乐，用声音传递情感。作为一名才艺博主，我致力于分享音乐的快乐，
+                    结识志同道合的朋友，用才艺点亮生活的每一个瞬间。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-zh="联系我" data-en="Contact Me" data-th="ติดต่อฉัน" data-vi="Liên hệ tôi">联系我</span>
+                    </a>
+                    <a href="#gallery" class="btn btn-secondary">
+                        <i class="fas fa-play"></i>
+                        <span data-zh="查看作品" data-en="View Works" data-th="ดูผลงาน" data-vi="Xem tác phẩm">查看作品</span>
+                    </a>
+                </div>
+                <div class="social-icons">
+                    <a href="https://instagram.com/zeneka_lukun" target="_blank" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://tiktok.com/@zeneka888" target="_blank" class="social-icon">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#contact" class="social-icon">
+                        <i class="fab fa-line"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-container">
+                    <div class="hero-image-decoration hero-image-decoration-1"></div>
+                    <div class="hero-image-decoration hero-image-decoration-2"></div>
+                    <img src="media/me.jpg" alt="Zeneka LuKun" class="hero-main-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-header reveal">
+            <span class="section-subtitle" data-zh="关于我" data-en="About Me" data-th="เกี่ยวกับฉัน" data-vi="Về tôi">关于我</span>
+            <h2 class="section-title" data-zh="认识 Zeneka" data-en="Get to Know Zeneka" data-th="รู้จัก Zeneka" data-vi="Nhận biết Zeneka">认识 Zeneka</h2>
+            <p class="section-description" data-zh="一个热爱音乐、追求梦想的年轻人" data-en="A young person who loves music and pursues dreams" data-th="คนหนุ่มที่รักเพลงและตามหาความฝัน" data-vi="Một người trẻ yêu âm nhạc và theo đuổi ước mơ">一个热爱音乐、追求梦想的年轻人</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image reveal">
+                <div class="about-img-container">
+                    <img src="media/billiards.jpg" alt="Zeneka" class="about-img">
+                </div>
+            </div>
+            <div class="about-info reveal">
+                <h3 class="about-name">Zeneka LuKun 鹿坤</h3>
+                <p class="about-role" data-zh="音乐爱好者 · 主播 · 才艺博主" data-en="Music Lover · Streamer · Talent Creator" data-th="คนรักเพลง · สตรีมเมอร์ · นักสร้างสรรค์" data-vi="Người yêu âm nhạc · Streamer · Người sáng tạo">音乐爱好者 · 主播 · 才艺博主</p>
+                <p class="about-text" data-zh="我是一名对音乐充满热情的创作者，同时也是一位活跃的才艺博主。音乐是我生命中不可或缺的一部分，它让我能够表达内心最真实的情感。" data-en="I am a creator full of passion for music, and also an active talent creator. Music is an indispensable part of my life, allowing me to express my innermost true emotions." data-th="ฉันเป็นผู้สร้างสรรค์ที่เต็มไปด้วยความหลงใหลในเพลง และยังเป็นนักสร้างสรรค์ผลงานที่กระตือรือร้น เพลงคือส่วนที่ขาดไม่ได้ของชีวิตฉัน มันทำให้ฉันสามารถแสดงออกถึงอารมณ์ที่แท้จริงในใจได้" data-vi="Tôi là một người sáng tạo đầy đam mê với âm nhạc và cũng là một người sáng tạo tài năng năng động. Âm nhạc là một phần không thể thiếu trong cuộc sống của tôi, cho phép tôi thể hiện những cảm xúc chân thật nhất trong lòng.">
+                    我是一名对音乐充满热情的创作者，同时也是一位活跃的才艺博主。
+                    音乐是我生命中不可或缺的一部分，它让我能够表达内心最真实的情感。
+                </p>
+                <p class="about-text" data-zh="通过直播和社交媒体，我结识了许多志同道合的朋友，我们一起分享音乐的快乐，探讨艺术的魅力。我相信，每个人都有属于自己的光芒，而我正在努力让自己的光芒更加闪耀。" data-en="Through live streaming and social media, I have met many like-minded friends. We share the joy of music together and explore the charm of art. I believe that everyone has their own light, and I am working hard to make my light shine even brighter." data-th="ผ่านการสตรีมและโซเชียลมีเดีย ฉันได้พบกับเพื่อนที่มีความคิดเหมือนกันมากมาย เราแบ่งปันความสุขจากเพลงด้วยกัน และสำรวจเสน่ห์ของศิลปะ ฉันเชื่อว่าทุกคนมีแสงของตัวเอง และฉันกำลังพยายามทำให้แสงของฉันสว่างขึ้น" data-vi="Thông qua phát trực tiếp và mạng xã hội, tôi đã gặp gỡ nhiều người bạn cùng chí hướng. Chúng tôi chia sẻ niềm vui từ âm nhạc cùng nhau và khám phá sự quyến rũ của nghệ thuật. Tôi tin rằng mỗi người đều có ánh sáng của riêng mình, và tôi đang nỗ lực để ánh sáng của mình tỏa sáng rực rỡ hơn.">
+                    通过直播和社交媒体，我结识了许多志同道合的朋友，我们一起分享音乐的快乐，
+                    探讨艺术的魅力。我相信，每个人都有属于自己的光芒，而我正在努力让自己的光芒更加闪耀。
+                </p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label" data-zh="原创作品" data-en="Original Works" data-th="ผลงานต้นฉบับ" data-vi="Tác phẩm gốc">原创作品</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2K+</div>
+                        <div class="stat-label" data-zh="粉丝关注" data-en="Followers" data-th="ผู้ติดตาม" data-vi="Người theo dõi">粉丝关注</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label" data-zh="直播场次" data-en="Live Streams" data-th="การสตรีมสด" data-vi="Phát trực tiếp">直播场次</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="section-header reveal">
+            <span class="section-subtitle" data-zh="我的才艺" data-en="My Talents" data-th="ทักษะของฉัน" data-vi="Tài năng của tôi">我的才艺</span>
+            <h2 class="section-title" data-zh="专业技能" data-en="Professional Skills" data-th="ทักษะมืออาชีพ" data-vi="Kỹ năng chuyên nghiệp">专业技能</h2>
+            <p class="section-description" data-zh="用才华诠释艺术，用热情传递能量" data-en="Interpreting art with talent, conveying energy with passion" data-th="ตีความศิลปะด้วยความสามารถ ส่งต่อพลังด้วยความหลงใหล" data-vi="Diễn giải nghệ thuật bằng tài năng, truyền tải năng lượng bằng niềm đam mê">用才华诠释艺术，用热情传递能量</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <div class="skill-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h3 class="skill-title" data-zh="音乐创作" data-en="Music Creation" data-th="การสร้างสรรค์เพลง" data-vi="Sáng tác âm nhạc">音乐创作</h3>
+                <p class="skill-description" data-zh="热爱音乐创作，擅长流行、民谣等多种风格。用音符编织故事，用旋律传递情感。" data-en="Passionate about music creation, skilled in various styles such as pop and folk. Weaving stories with notes, conveying emotions with melodies." data-th="หลงใหลในการสร้างสรรค์เพลง มีทักษะในหลายสไตล์เช่นป็อปและโฟล์ก ถักทองเรื่องราวด้วยโน้ตสังเคราะห์ ส่งผ่านอารมณ์ด้วยทำนองเพลง" data-vi="Đam mê sáng tác âm nhạc, giỏi nhiều phong cách như pop và folk. Dệt chuyện bằng nốt nhạc, truyền tải cảm xúc bằng giai điệu.">
+                    热爱音乐创作，擅长流行、民谣等多种风格。用音符编织故事，用旋律传递情感。
+                </p>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">
+                    <i class="fas fa-microphone"></i>
+                </div>
+                <h3 class="skill-title" data-zh="主播主持" data-en="Live Streaming" data-th="การสตรีมสด" data-vi="Phát trực tiếp">主播主持</h3>
+                <p class="skill-description" data-zh="专业的直播主持能力，善于与观众互动，营造轻松愉快的直播氛围。" data-en="Professional live streaming hosting skills, good at interacting with audiences and creating a relaxed and happy live streaming atmosphere." data-th="ทักษะการเป็นพิธีกรสตรีมสดมืออาชีพ ดีในการโต้ตอบกับผู้ชม สร้างบรรยากาศสตรีมสดที่ผ่อนคลายและสนุกสนาน" data-vi="Kỹ năng dẫn chương trình phát trực tiếp chuyên nghiệp, giỏi tương tác với khán giả và tạo bầu không khí phát trực tiếp thư giãn và vui vẻ.">
+                    专业的直播主持能力，善于与观众互动，营造轻松愉快的直播氛围。
+                </p>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="skill-title" data-zh="社交达人" data-en="Social Connector" data-th="ผู้เชื่อมโยงทางสังคม" data-vi="Người kết nối xã hội">社交达人</h3>
+                <p class="skill-description" data-zh="热衷于结识新朋友，善于沟通交流，在社交平台上拥有良好的人气和影响力。" data-en="Enthusiastic about meeting new friends, good at communication, with good popularity and influence on social platforms." data-th="กระตือรือร้นในการพบปะเพื่อนใหม่ ดีในการสื่อสาร มีความนิยมและอิทธิพลที่ดีบนแพลตฟอร์มโซเชียล" data-vi="Hăng hái gặp gỡ bạn mới, giỏi giao tiếp, có mức độ phổ biến và ảnh hưởng tốt trên các nền tảng mạng xã hội.">
+                    热衷于结识新朋友，善于沟通交流，在社交平台上拥有良好的人气和影响力。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="section-header reveal">
+            <span class="section-subtitle" data-zh="作品展示" data-en="Portfolio" data-th="ผลงาน" data-vi="Tác phẩm">作品展示</span>
+            <h2 class="section-title" data-zh="精彩瞬间" data-en="Highlight Moments" data-th="ช่วงเวลาที่น่าจดจำ" data-vi="Khoảnh khắc nổi bật">精彩瞬间</h2>
+            <p class="section-description" data-zh="记录每一个闪耀的舞台时刻" data-en="Recording every shining moment on stage" data-th="บันทึกทุกช่วงเวลาที่สว่างไสวบนเวที" data-vi="Ghi lại mọi khoảnh khắc rực rỡ trên sân khấu">记录每一个闪耀的舞台时刻</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item reveal">
+                <video src="media/post_on_sitting.mp4" muted loop playsinline></video>
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title" data-zh="坐姿表演" data-en="Sitting Performance" data-th="การแสดงนั่ง" data-vi="Biểu diễn ngồi">坐姿表演</h3>
+                    <span class="gallery-tag" data-zh="才艺展示" data-en="Talent Show" data-th="การแสดงทักษะ" data-vi="Trình diễn tài năng">才艺展示</span>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <video src="media/singing_on_bed.mp4" muted loop playsinline></video>
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title" data-zh="床上弹唱" data-en="Singing on Bed" data-th="ร้องเพลงบนเตียง" data-vi="Hát trên giường">床上弹唱</h3>
+                    <span class="gallery-tag" data-zh="音乐表演" data-en="Music Performance" data-th="การแสดงดนตรี" data-vi="Biểu diễn âm nhạc">音乐表演</span>
+                </div>
+            </div>
+            <div class="gallery-item reveal">
+                <img src="media/billiards.jpg" alt="台球时光">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title" data-zh="台球时光" data-en="Billiards Time" data-th="เวลาเล่นบิลเลียด" data-vi="Thời gian chơi bi-a">台球时光</h3>
+                    <span class="gallery-tag" data-zh="生活记录" data-en="Life Record" data-th="บันทึกชีวิต" data-vi="Ghi lại cuộc sống">生活记录</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-header reveal">
+            <span class="section-subtitle" data-zh="联系我" data-en="Contact Me" data-th="ติดต่อฉัน" data-vi="Liên hệ tôi">联系我</span>
+            <h2 class="section-title" data-zh="保持联系" data-en="Stay Connected" data-th="ติดต่อกัน" data-vi="Giữ liên lạc">保持联系</h2>
+            <p class="section-description" data-zh="期待与你的每一次交流" data-en="Looking forward to every conversation with you" data-th="รอการสนทนากับคุณทุกครั้ง" data-vi="H mong mọi cuộc trò chuyện với bạn">期待与你的每一次交流</p>
+        </div>
+        <div class="contact-content">
+            <div class="contact-info reveal">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Instagram</h4>
+                        <a href="https://instagram.com/zeneka_lukun" target="_blank">@zeneka_lukun</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-line"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>LINE</h4>
+                        <p data-zh="扫描二维码添加好友" data-en="Scan QR code to add friend" data-th="สแกน QR Code เพื่อเพิ่มเพื่อน" data-vi="Quét mã QR để thêm bạn">扫描二维码添加好友</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4 data-zh="邮箱联系" data-en="Email" data-th="อีเมล" data-vi="Email">邮箱联系</h4>
+                        <p>zenekast@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>TikTok</h4>
+                        <a href="https://tiktok.com/@zeneka888" target="_blank">@zeneka888</a>
+                    </div>
+                </div>
+            </div>
+            <div class="qr-sections">
+                <div class="qr-section reveal">
+                    <h3 class="qr-title" data-zh="添加我的 LINE" data-en="Add My LINE" data-th="เพิ่ม LINE ของฉัน" data-vi="Thêm LINE của tôi">添加我的 LINE</h3>
+                    <img src="media/line_qr_code.jpg" alt="LINE QR Code" class="qr-code">
+                    <p class="qr-description" data-zh="扫描二维码，添加我的 LINE 好友" data-en="Scan QR code to add me on LINE" data-th="สแกน QR Code เพื่อเพิ่มฉันใน LINE" data-vi="Quét mã QR để thêm tôi trên LINE">扫描二维码，添加我的 LINE 好友</p>
+                    <a href="https://instagram.com/zeneka_lukun" target="_blank" class="qr-btn">
+                        <i class="fab fa-instagram"></i>
+                        <span data-zh="关注 Instagram" data-en="Follow on Instagram" data-th="ติดตาม Instagram" data-vi="Theo dõi Instagram">关注 Instagram</span>
+                    </a>
+                </div>
+                <div class="qr-section reveal">
+                    <h3 class="qr-title" data-zh="加入粉丝团 LINE 群" data-en="Join Follower LINE Group" data-th="เข้าร่วมกลุ่ม LINE ผู้ติดตาม" data-vi="Tham gia nhóm LINE người theo dõi">加入粉丝团 LINE 群</h3>
+                    <img src="media/my_line_follower_group.jpg" alt="Follower Group QR Code" class="qr-code">
+                    <p class="qr-description" data-zh="扫描二维码，加入我的粉丝团 LINE 群" data-en="Scan QR code to join my follower LINE group" data-th="สแกน QR Code เพื่อเข้าร่วมกลุ่ม LINE ผู้ติดตามของฉัน" data-vi="Quét mã QR để tham gia nhóm LINE người theo dõi của tôi">扫描二维码，加入我的粉丝团 LINE 群</p>
+                    <a href="https://tiktok.com/@zeneka888" target="_blank" class="qr-btn" style="background: #000000;">
+                        <i class="fab fa-tiktok"></i>
+                        <span data-zh="关注 TikTok" data-en="Follow on TikTok" data-th="ติดตาม TikTok" data-vi="Theo dõi TikTok">关注 TikTok</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">Zeneka LuKun</div>
+        <p class="footer-text" data-zh="音乐爱好者 · 才艺博主 · 用心传递美好" data-en="Music Lover · Talent Creator · Spreading Goodness with Heart" data-th="คนรักเพลง · นักสร้างสรรค์ · ส่งต่อความดีด้วยใจ" data-vi="Người yêu âm nhạc · Người sáng tạo · Truyền tải điều tốt bằng trái tim">音乐爱好者 · 才艺博主 · 用心传递美好</p>
+        <div class="footer-social">
+            <a href="https://instagram.com/zeneka_lukun" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://tiktok.com/@zeneka888" target="_blank">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="#contact">
+                <i class="fab fa-line"></i>
+            </a>
+        </div>
+        <p class="footer-copyright">© 2024 Zeneka LuKun. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Language Switching
+        (function() {
+            let currentLang = 'zh';
+            const languages = ['zh', 'en', 'th', 'vi'];
+            
+            // Detect browser language
+            function detectLanguage() {
+                const browserLang = navigator.language || navigator.userLanguage;
+                // Check for Thai
+                if (browserLang.startsWith('th')) {
+                    return 'th';
+                }
+                // Check for Vietnamese
+                if (browserLang.startsWith('vi')) {
+                    return 'vi';
+                }
+                // Check for English
+                if (browserLang.startsWith('en')) {
+                    return 'en';
+                }
+                // Default to Chinese
+                return 'zh';
+            }
+            
+            // Switch language
+            function switchLanguage(lang) {
+                currentLang = lang;
+                
+                // Update language switch button
+                document.getElementById('langZh').classList.toggle('active', lang === 'zh');
+                document.getElementById('langEn').classList.toggle('active', lang === 'en');
+                document.getElementById('langTh').classList.toggle('active', lang === 'th');
+                document.getElementById('langVi').classList.toggle('active', lang === 'vi');
+                
+                // Update all elements with data attributes
+                const elements = document.querySelectorAll('[data-zh]');
+                elements.forEach(element => {
+                    const text = element.getAttribute(`data-${lang}`);
+                    if (text) {
+                        element.textContent = text;
+                    }
+                });
+                
+                // Update nav links specifically
+                const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu-links a');
+                navLinks.forEach(link => {
+                    const text = link.getAttribute(`data-${lang}`);
+                    if (text) {
+                        link.textContent = text;
+                    }
+                });
+                
+                // Save preference to localStorage
+                localStorage.setItem('preferredLang', lang);
+            }
+            
+            // Initialize language
+            function initLanguage() {
+                // Check if user has a saved preference
+                const savedLang = localStorage.getItem('preferredLang');
+                if (savedLang && languages.includes(savedLang)) {
+                    switchLanguage(savedLang);
+                } else {
+                    // Detect browser language
+                    const detectedLang = detectLanguage();
+                    switchLanguage(detectedLang);
+                }
+            }
+            
+            // Event listeners for language switch buttons
+            document.getElementById('langZh').addEventListener('click', function(e) {
+                e.stopPropagation();
+                switchLanguage('zh');
+            });
+            document.getElementById('langEn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                switchLanguage('en');
+            });
+            document.getElementById('langTh').addEventListener('click', function(e) {
+                e.stopPropagation();
+                switchLanguage('th');
+            });
+            document.getElementById('langVi').addEventListener('click', function(e) {
+                e.stopPropagation();
+                switchLanguage('vi');
+            });
+            
+            // Initialize on page load
+            initLanguage();
+        })();
+
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.preloader').classList.add('hidden');
+            }, 500);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+        });
+
+        mobileMenuOverlay.addEventListener('click', function() {
+            mobileMenuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        });
+
+        // Active Nav Link
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.querySelector('.scroll-top');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Reveal Animation on Scroll
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function reveal() {
+            revealElements.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Video Hover Play
+        const videos = document.querySelectorAll('.gallery-item video');
+
+        videos.forEach(video => {
+            video.parentElement.addEventListener('mouseenter', function() {
+                video.play();
+            });
+
+            video.parentElement.addEventListener('mouseleave', function() {
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
