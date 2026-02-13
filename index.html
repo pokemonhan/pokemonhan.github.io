@@ -511,6 +511,132 @@
             border-color: transparent;
         }
 
+        /* Live Schedule */
+        .live-schedule {
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: rgba(108, 92, 231, 0.15);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease 1.4s both;
+        }
+
+        .live-schedule-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .live-schedule-title .live-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .live-time-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .live-time-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .live-time-label {
+            color: var(--text-gray);
+            min-width: 80px;
+        }
+
+        .live-time-value {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .live-time-value.highlight {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .live-clock {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .live-clock-time {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-clock-date {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        .live-countdown {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .live-countdown-title {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .live-countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 45px;
+        }
+
+        .countdown-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.65rem;
+            color: var(--text-gray);
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+        }
+
         /* Section Styles */
         section {
             padding: 100px 5%;
@@ -1290,6 +1416,43 @@
                         <i class="fab fa-line"></i>
                     </a>
                 </div>
+                <div class="live-schedule">
+                    <div class="live-schedule-title">
+                        <span class="live-icon">
+                            <i class="fas fa-broadcast-tower"></i>
+                        </span>
+                        <span data-zh="每日直播时间" data-en="Daily Live Schedule" data-th="ตารางสตรีมสดทุกวัน" data-vi="Lịch phát trực tiếp hàng ngày">每日直播时间</span>
+                    </div>
+                    <div class="live-time-item">
+                        <span class="live-time-label" data-zh="北京时间" data-en="Beijing Time" data-th="เวลาปักกิ่ง" data-vi="Giờ Bắc Kinh">北京时间</span>
+                        <span class="live-time-value highlight">22:00</span>
+                    </div>
+                    <div class="live-time-item">
+                        <span class="live-time-label" data-zh="当地时间" data-en="Your Local Time" data-th="เวลาท้องถิ่นของคุณ" data-vi="Giờ địa phương của bạn">当地时间</span>
+                        <span class="live-time-value" id="localLiveTime">--:--</span>
+                    </div>
+                    <div class="live-clock">
+                        <div class="live-clock-time" id="currentTime">00:00:00</div>
+                        <div class="live-clock-date" id="currentDate">Loading...</div>
+                    </div>
+                    <div class="live-countdown">
+                        <div class="live-countdown-title" data-zh="距离下次直播" data-en="Next Live In" data-th="ถึงสตรีมสดครั้งต่อไป" data-vi="Cách phát trực tiếp tiếp theo">距离下次直播</div>
+                        <div class="live-countdown-timer" id="countdownTimer">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownHours">00</span>
+                                <span class="countdown-label" data-zh="时" data-en="HRS" data-th="ชม" data-vi="GIỜ">时</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownMinutes">00</span>
+                                <span class="countdown-label" data-zh="分" data-en="MIN" data-th="นาที" data-vi="PHÚT">分</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownSeconds">00</span>
+                                <span class="countdown-label" data-zh="秒" data-en="SEC" data-th="วินาที" data-vi="GIÂY">秒</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="hero-image">
                 <div class="hero-image-container">
@@ -1595,6 +1758,114 @@
             
             // Initialize on page load
             initLanguage();
+        })();
+
+        // Live Schedule Time Calculation
+        (function() {
+            function calculateLocalLiveTime() {
+                // Beijing time is 22:00 (10 PM) UTC+8
+                // Convert to UTC: 22:00 - 8 hours = 14:00 UTC
+                const beijingHour = 22;
+                const beijingOffset = 8;
+                const utcHour = beijingHour - beijingOffset;
+                
+                // Get user's timezone offset
+                const userOffset = -new Date().getTimezoneOffset() / 60;
+                
+                // Calculate local time
+                let localHour = utcHour + userOffset;
+                
+                // Handle day wrap-around
+                if (localHour >= 24) {
+                    localHour -= 24;
+                } else if (localHour < 0) {
+                    localHour += 24;
+                }
+                
+                // Format time
+                const formattedHour = localHour.toString().padStart(2, '0');
+                const formattedTime = `${formattedHour}:00`;
+                
+                // Update display
+                const localTimeElement = document.getElementById('localLiveTime');
+                if (localTimeElement) {
+                    localTimeElement.textContent = formattedTime;
+                }
+            }
+            
+            // Update current time clock
+            function updateClock() {
+                const now = new Date();
+                const timeElement = document.getElementById('currentTime');
+                const dateElement = document.getElementById('currentDate');
+                
+                if (timeElement) {
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const seconds = now.getSeconds().toString().padStart(2, '0');
+                    timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+                }
+                
+                if (dateElement) {
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    const currentLang = localStorage.getItem('preferredLang') || 'zh';
+                    dateElement.textContent = now.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : currentLang === 'th' ? 'th-TH' : currentLang === 'vi' ? 'vi-VN' : 'en-US', options);
+                }
+            }
+            
+            // Calculate countdown to next live stream
+            function updateCountdown() {
+                const now = new Date();
+                const beijingOffset = 8;
+                const userOffset = -now.getTimezoneOffset() / 60;
+                
+                // Calculate next live time in user's timezone
+                let nextLiveHour = 22 + (userOffset - beijingOffset);
+                
+                // Handle day wrap-around
+                if (nextLiveHour >= 24) {
+                    nextLiveHour -= 24;
+                } else if (nextLiveHour < 0) {
+                    nextLiveHour += 24;
+                }
+                
+                // Create next live time object
+                const nextLive = new Date();
+                nextLive.setHours(nextLiveHour, 0, 0, 0);
+                
+                // If next live time is earlier than current time, it's tomorrow
+                if (nextLive <= now) {
+                    nextLive.setDate(nextLive.getDate() + 1);
+                }
+                
+                // Calculate time difference
+                const diff = nextLive - now;
+                
+                // Calculate hours, minutes, seconds
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // Update display
+                const hoursElement = document.getElementById('countdownHours');
+                const minutesElement = document.getElementById('countdownMinutes');
+                const secondsElement = document.getElementById('countdownSeconds');
+                
+                if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
+                if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
+                if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
+            }
+            
+            // Calculate on page load
+            calculateLocalLiveTime();
+            updateClock();
+            updateCountdown();
+            
+            // Update every second
+            setInterval(function() {
+                updateClock();
+                updateCountdown();
+            }, 1000);
         })();
 
         // Preloader
